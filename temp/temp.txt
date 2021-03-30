@@ -1,0 +1,55 @@
+# verify the current working directory
+getwd()
+setwd("/home/runner/loveRLearning/data")
+# print('printing working directory: ' + getwd())
+getwd()
+#  read data from CSV file
+readFile <- read.csv("data1.csv");
+readFile
+class(readFile)
+
+# files <- list.files("path/to/directory/")
+# sapply(files, function(file){
+#                       x <- read.csv(file)
+#                       colnames(x) <- c("Col1", "Col2")
+#                       write.csv(paste0("new_", file),x)
+# }
+
+# type1
+
+# files <- list.files("/home/runner/loveRLearning/data")
+# sapply(files, function(file) {
+#   x <- read.csv(file)
+
+#   colnames(x) <- c("*SNO*", "NAME", "AGE", "GENDER", "HEIGHT", "WEIGHT")
+
+#   write.csv(paste0("new_", file),x)
+# })
+
+# type2
+
+# create the output folder
+# showWarnings = FALSE ensures that the function does not complain,
+# even if the folder already exists
+dir.create(out_path, showWarnings = FALSE)
+
+# get the names of the input files with their full path
+files <- list.files(path, "\\.csv", full.name = TRUE)
+
+# loop through all the input files
+for (file in files) {
+
+  # read the file, specify the correct separator
+  data <- read.table(file, sep = "|")
+
+  # set the column names
+  names(data) <- c("date", "level")
+
+  # define the output file name: the file should be written to
+  # out_path and have the same name as the original file
+  outfile <- file.path(out_path, basename(file))
+
+  # write the file. You need to specify the separator (|), and
+  # omit row names and quotes
+  write.table(data, outfile, sep = "|", row.names = FALSE, quote = FALSE)
+}
